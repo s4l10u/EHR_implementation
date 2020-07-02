@@ -1,0 +1,3 @@
+umbral
+python-decouple >= 3.3
+python-dotenv

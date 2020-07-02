@@ -1,0 +1,22 @@
+{
+  "name": "ehrs_imp",
+  "version": "1.0.0",
+  "description": "Implementation ipfs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/S4-LI-0U-F4-LL/EHRs_IMP.git"
+  },
+  "author": "Saliou FALL",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/S4-LI-0U-F4-LL/EHRs_IMP/issues"
+  },
+  "homepage": "https://github.com/S4-LI-0U-F4-LL/EHRs_IMP#readme",
+  "dependencies": {
+    "ipfs-http-client": "^44.2.0"
+  }
+}
