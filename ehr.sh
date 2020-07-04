@@ -32,6 +32,12 @@ function Help() {
   echo
   echo "    -w < WALLET > - Folder for generated keys"
   echo
+  echo "    -f < FOR > - Owner of re-encrtyption key "
+  echo
+  echo "    -dpk <DELEGER PUBKEY > - Deleger keys"
+  echo
+  echo "    -vpk < DELEGER VERIFYKEY > - Owner of re-encrtyption key "
+  echo
   
   echo " Possible Mode and flags"
   echo "  ehr.sh add -n  -o "
@@ -40,10 +46,11 @@ function Help() {
 
   echo
   echo " Examples:"
-  echo "  ehr.sh add -n Parasitological.pdf -o ~/my/ehr/folder"
+  echo "  ./ehr.sh add -n Parasitological.pdf -o ~/my/ehr/folder"
   echo
-  echo "  ehr.sh gen-re-key -pk public_key.cert -t 10 -N 20 -o ~/my/ehr/re-keys"
+  echo "  ./ehr.sh gen-re-key -pk public_key.cert -t 10 -N 20 -o ~/my/ehr/re-keys"
   echo
+  echo " ./ehr.sh  gen-re-key -w Alice -pk keys/Bob/public_key.cert -f Bob"
 }
 export N=1
 export THRESHOLD=1
@@ -86,6 +93,14 @@ while [[ $# -ge 1 ]] ; do
     export PK_PATH="$2"
     shift
     ;;
+    -dpk )
+    export DELEGERPK="$2"
+    shift
+    ;;
+    -vpk )
+    export DELEGERVK="$2"
+    shift
+    ;;
   -t )
     export THRESHOLD="$2"
     shift
@@ -96,6 +111,10 @@ while [[ $# -ge 1 ]] ; do
     ;;
   -i )
     export ID="$2"
+    shift
+    ;;
+  -f)
+    export FOR="$2"
     shift
     ;;
   -w )
@@ -131,18 +150,25 @@ function Genkey(){
 }
  
 function Encrypt(){
+    cd Encrypted
+    mkdir $WALLET
+    cd ..
     python Encrypt.py
 }
+
 
 function Decrypt(){
     python Decrypt.py
 }
 
 function GenReKey(){
+   cd Ursulas
+   mkdir $FOR
+   cd ..
    python genrekey.py
 }
-function GenReKey(){
-   python reencrypt.py
+function ReEncrypt(){
+   python re-encrypt.py
 }
 # Determine mode of operation and printing out what we asked for
 if [ "$MODE" == "add" ]; then
@@ -185,8 +211,10 @@ elif [ "$MODE" == "genkey" ]; then
   echo " *************                Setting a default curve                 *************"
   echo
   echo " *************              Genete private and public key             *************"
+   echo
+  echo " *************              Genete signing and verifying key          *************"
   echo
-  echo " *************                 Store keys in keys folder               *************"
+  echo " *************                 Store keys  to $WALLET WALLET          *************"
   echo
 
 elif [ "$MODE" == "enc" ]; then
@@ -202,7 +230,7 @@ elif [ "$MODE" == "dec" ]; then
   echo
   Decrypt
   echo
-  echo " *************                  Decrypt  file                        *************"
+  echo " *************                   Decrypt  file                        *************"
   echo
   echo " *************   Store decrypted file and the capsule  to $OUTPUT_PATH *************"
   echo
@@ -222,7 +250,7 @@ elif [ "$MODE" == "gen-re-key" ]; then
 
 elif [ "$MODE" == "re-enc" ]; then
   echo
-  ReEnc
+  ReEncrypt
   echo " *************                  Retrieve kfrags from proxies            *************"
   echo
   echo " *************                     perform re-encryption               *************"

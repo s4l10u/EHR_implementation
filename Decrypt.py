@@ -33,16 +33,17 @@ capsule_byte= pickle.load(open(os.getenv("CAPSULE"), 'rb'))
 capsule = pre.Capsule.from_bytes(capsule_byte,params)
 
 
-alices_private_key_byte= pickle.load(open('keys/private_key.pem', 'rb'))
+private_key_byte= pickle.load(open('keys/'+os.getenv("WALLET") +'/private_key.pem', 'rb'))
 
-alices_private_key= keys.UmbralPrivateKey.from_bytes(alices_private_key_byte)
+private_key= keys.UmbralPrivateKey.from_bytes(private_key_byte)
 
-cleartext = pre.decrypt(ciphertext=ciphertext,capsule=capsule,decrypting_key=alices_private_key)
+cleartext = pre.decrypt(ciphertext=ciphertext,capsule=capsule,decrypting_key=private_key)
 
 
-output_file = open(os.getenv("OUTPUT_PATH"), "wb")
+output_file = open('Encrpted/'+os.getenv("WALLET"), "wb")
 output_file.write(cleartext)
 output_file.close()
 
 #pickle.dump(cleartext,open("Med_Doc/decrypted_file.jpeg", "wb")  )
-print(os.getenv("OUTPUT_PATH")+os.getenv("NAME"))
+print(os.getenv("OUTPUT_PATH"))
+#+os.getenv("NAME")

@@ -18,11 +18,11 @@ file = open(os.getenv("NAME"), "rb")
 plaintext = file.read()
 
 # Encrypt it
-alices_public_key_byte= pickle.load(open('keys/public_key.cert', 'rb'))
+public_key_byte= pickle.load(open('keys/'+os.getenv("WALLET") +'/public_key.cert', 'rb'))
 
-alices_public_key= keys.UmbralPublicKey.from_bytes(alices_public_key_byte)
+public_key= keys.UmbralPublicKey.from_bytes(public_key_byte)
 
-ciphertext, capsule = pre.encrypt(alices_public_key, plaintext)
+ciphertext, capsule = pre.encrypt(public_key, plaintext)
 
 #os.environ["capsule"]=capsule
 #os.getenv("capsule")
@@ -30,10 +30,10 @@ ciphertext, capsule = pre.encrypt(alices_public_key, plaintext)
 
 # save the cipher and capsule
 
-pickle.dump(ciphertext, open(os.getenv("OUTPUT_PATH"), "wb") )
+pickle.dump(ciphertext,  open('Encrypted/'+os.getenv("WALLET")+'/'+ os.getenv("NAME")+'.enc', "wb") )
 
 capsule_byte = pre.Capsule.to_bytes(capsule)
 
 #print (  pre.Capsule.from_bytes(capsule_byte))
 
-pickle.dump(capsule_byte,open('Capsule_' + os.getenv("NAME"),'wb'))
+pickle.dump(capsule_byte, open('Encrypted/'+os.getenv("WALLET")+ '/'+ os.getenv("NAME")+'.cap','wb'))

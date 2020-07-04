@@ -37,3 +37,15 @@ outfile = open('keys/'+ os.getenv("WALLET")+'/public_key.cert','wb')
 pickle.dump(public_key_byte,outfile)
 outfile.close()
 
+signing_key = keys.UmbralPrivateKey.gen_key()
+signing_key_byte=keys.UmbralPrivateKey.to_bytes(signing_key)
+outfile = open('keys/'+ os.getenv("WALLET") +'/signing_key.pem','wb')
+pickle.dump(signing_key_byte,outfile)
+outfile.close()
+
+verifying_key = signing_key.get_pubkey()
+verifying_key_byte=keys.UmbralPublicKey.to_bytes(verifying_key)
+outfile = open('keys/'+ os.getenv("WALLET") +'/verifying_key.cert','wb')
+pickle.dump(verifying_key_byte,outfile)
+outfile.close()
+
