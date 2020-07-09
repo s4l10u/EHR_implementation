@@ -34,27 +34,37 @@ function Help() {
   echo
   echo "    -f < FOR > - Owner of re-encrtyption key "
   echo
-  echo "    -dpk <DELEGER PUBKEY > - Deleger keys"
+  echo "    -dpk <DELEGER PUBKEY > - Deleger public keys"
   echo
-  echo "    -vpk < DELEGER VERIFYKEY > - Owner of re-encrtyption key "
+  echo "    -vpk < DELEGER VERIFYKEY > - Deleger verifying keys "
   echo
   
   echo " Possible Mode and flags"
+  echo
   echo "  ehr.sh add -n  -o "
+  echo
   echo "  ehr.sh retrieve -i -o "
+  echo
   echo "  ehr.sh gen-re-key -pk -N -t -o "
 
   echo
   echo " Examples:"
+  echo
   echo "  ./ehr.sh add -n Parasitological.pdf -o ~/my/ehr/folder"
   echo
   echo "  ./ehr.sh gen-re-key -pk public_key.cert -t 10 -N 20 -o ~/my/ehr/re-keys"
   echo
-  echo " ./ehr.sh  gen-re-key -w Alice -pk keys/Bob/public_key.cert -f Bob"
+  echo "  ./ehr.sh enc  -n scan.jpeg  -w Alice"
+  echo
+  echo " ./ehr.sh gen-re-key -w Jean -t 10 -N 15 -f Bob -pk keys/Bob/public_key.cert"
+  echo
+  echo "./ehr.sh re-enc -f Bob -dpk keys/Jean/public_key.cert -dvk keys/Jean/verifying_key.cert -c Encrypted/Jean/scan.jpeg.cap -pk keys/Bob/public_key.cert "
+  echo
+  echo " ./ehr.sh dec   -n Encrypted/Alice/scan.jpeg.enc  -c Encrypted/Alice/scan.jpeg.cap  -w Alice -o scan.jpeg"
 }
 export N=1
 export THRESHOLD=1
-export OUTPUT_PATH=$ NAME
+
 ## Parse mode
 # # Local .env
 # source <(sed -E -n 's/[^#]+/export &/ p' .env)
@@ -77,7 +87,6 @@ while [[ $# -ge 1 ]] ; do
     exit 0
     ;;
     -n )
-    
     export NAME="$2"
     shift
     ;;
@@ -93,11 +102,11 @@ while [[ $# -ge 1 ]] ; do
     export PK_PATH="$2"
     shift
     ;;
-    -dpk )
+  -dpk )
     export DELEGERPK="$2"
     shift
     ;;
-    -vpk )
+  -dvk )
     export DELEGERVK="$2"
     shift
     ;;
@@ -105,6 +114,7 @@ while [[ $# -ge 1 ]] ; do
     export THRESHOLD="$2"
     shift
     ;;
+
   -N )
     export N="$2"
     shift
@@ -144,63 +154,73 @@ function Retrieve_EHR(){
 
 function Genkey(){
     cd keys
-    mkdir $WALLET
+    [ ! -d "$WALLET" ] && mkdir -p "$WALLET"
     cd ..
     python genkey.py
 }
- 
+
+
+
 function Encrypt(){
-    cd Encrypted
-    mkdir $WALLET
-    cd ..
-    python Encrypt.py
+  cd Encrypted
+  [ ! -d "$WALLET" ] && mkdir -p "$WALLET"
+  cd ..
+  #cp  -u $NAME  docs
+  python Encrypt.py
 }
 
 
 function Decrypt(){
+    cd Decrypted
+    [ ! -d "$WALLET" ] && mkdir -p "$WALLET"
+    cd ..
     python Decrypt.py
 }
 
 function GenReKey(){
    cd Ursulas
-   mkdir $FOR
+   [ ! -d "$FOR" ] && mkdir -p "$FOR"
    cd ..
    python genrekey.py
 }
+
 function ReEncrypt(){
-   python re-encrypt.py
+  cd Re-encrypted
+  [ ! -d "$FOR" ] && mkdir -p "$FOR"
+  cd ..
+  python re-encrypt.py
 }
 # Determine mode of operation and printing out what we asked for
 if [ "$MODE" == "add" ]; then
   echo
   Add_EHR
-  echo " *************                  Encrypt  file                  *************"
+  echo " + Encrypt  file"
   echo
-  echo " *************   Store encrypted file and the capsule  to IPFS *************"
+  echo " + Store encrypted file and the capsule  to IPFS "
   echo 
-  echo " *************          Retrive the hash file from IPFS        *************"
+  echo " + Retrive the hash file from IPFS"
   echo
-  echo " *************          Connect to an organisation peer        *************"
+  echo " + Connect to an organisation peer"
   echo
-  echo " *************                  Invok the chaincode            *************"
+  echo " + Invok the chaincode"
   echo
-  echo " *************             Create an update transaction        *************"
+  echo " + Create an update transaction"
   echo
-  echo " *************           Add a new asset to the blockchain     *************"
-  echo
+  echo " + Add a new asset to the blockchain  "
+  echo 
   Add_EHR
 
 elif [ "$MODE" == "retrieve" ]; then
   echo
   Retrieve
   echo
-  echo " *************       Query $ID EHR asset from the ledger      *************"
+  echo " + Query $ID EHR asset from the ledger      "
   echo
-  echo " *************    Revieve the  $ID EHR asset file form IPFS   *************"
+  echo " + Revieve the  $ID EHR asset file form IPFS   "
   echo
-  echo " *************               Decrypt   $ID EHR                *************"
+  echo " + Decrypt   $ID EHR"
   echo
-  echo " *************      Store the derypted file to $OUTPUT_PATH   *************"
+  echo " + Store the derypted file to $OUTPUT_PATH  "
   echo
 
   echo
@@ -208,31 +228,31 @@ elif [ "$MODE" == "retrieve" ]; then
 elif [ "$MODE" == "genkey" ]; then
   echo
   Genkey
-  echo " *************                Setting a default curve                 *************"
+  echo " + Setting a default curve"
   echo
-  echo " *************              Genete private and public key             *************"
+  echo " + Genete private and public key"
    echo
-  echo " *************              Genete signing and verifying key          *************"
+  echo " + Genete signing and verifying key"
   echo
-  echo " *************                 Store keys  to $WALLET WALLET          *************"
+  echo " + Store keys  to $WALLET WALLET"
   echo
 
 elif [ "$MODE" == "enc" ]; then
   
   echo
   Encrypt
-  echo " *************                   Encrypt  file                         *************"
+  echo " + Encrypt  file"
   echo
-  echo " *************    Store encrypted file and the capsule  to $OUTPUT_PATH*************"
+  echo " + Store encrypted file and the capsule  to $OUTPUT_PATH"
   echo
 
 elif [ "$MODE" == "dec" ]; then
   echo
   Decrypt
   echo
-  echo " *************                   Decrypt  file                        *************"
+  echo " + Decrypt  file"
   echo
-  echo " *************   Store decrypted file and the capsule  to $OUTPUT_PATH *************"
+  echo " + Store decrypted file and the capsule  to $OUTPUT_PATH +"
   echo
  
 
@@ -241,21 +261,21 @@ elif [ "$MODE" == "gen-re-key" ]; then
   echo
   GenReKey
   echo
-  echo " *************             creates re-encryption key                  *************"
+  echo " + creates re-encryption key"
   echo
-  echo " *************      fragments the re-encryption key to $N kfrag       *************"
+  echo " + fragments the re-encryption key to $N kfrag"
   echo
-  echo " *************        Send kfrag to $N proxies or Ursulas             *************"
+  echo " + Send kfrag to $N proxies or Ursulas"
   echo
 
 elif [ "$MODE" == "re-enc" ]; then
   echo
   ReEncrypt
-  echo " *************                  Retrieve kfrags from proxies            *************"
+  echo " + Retrieve kfrags from proxies"
   echo
-  echo " *************                     perform re-encryption               *************"
+  echo " + perform re-encryption"
   echo
-  echo " *************            Store the re-encrypted capsule to IPFS       *************"
+  echo " + Store the re-encrypted capsule to IPFS"
   echo
 
 else
@@ -264,22 +284,3 @@ else
 fi
 
 
-# if [ "${MODE}" == "up" ]; then
-#   networkUp
-# elif [ "${MODE}" == "createChannel" ]; then
-#   createChannel
-# elif [ "${MODE}" == "deployCC" ]; then
-#   deployCC
-# elif [ "${MODE}" == "down" ]; then
-#   networkDown
-# elif [ "${MODE}" == "restart" ]; then
-#   networkDown
-#   networkUp
-# else
-#   Help
-#   exit 1
-# fi
-
-
-
-#python Decrypt.py

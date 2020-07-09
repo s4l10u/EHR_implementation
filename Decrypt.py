@@ -24,26 +24,33 @@ import dill
 project_folder = os.getcwd()
 load_dotenv(os.path.join(project_folder, '.env'))
 
-ciphertext = pickle.load(open(os.getenv("NAME"), 'rb'))
+file = open(os.getenv("NAME"), 'rb')  # The "rb" clause tells the open method to read the file as bytes
+ciphertext = file.read()
 
-capsule_byte= pickle.load(open(os.getenv("CAPSULE"), 'rb'))
+# ciphertext = pickle.load(open(os.getenv("NAME"), 'rb'))
 
-#capsule = keys.UmbralPrivateKey.from_bytes(capsule_byte)
+# capsule_byte= pickle.load(open(os.getenv("CAPSULE"), 'rb'))
+
+file = open(os.getenv("CAPSULE"), 'rb')  # The "rb" clause tells the open method to read the file as bytes
+capsule_byte = file.read()
 
 capsule = pre.Capsule.from_bytes(capsule_byte,params)
 
+print (capsule)
+print (hash(ciphertext))
 
-private_key_byte= pickle.load(open('keys/'+os.getenv("WALLET") +'/private_key.pem', 'rb'))
+private_key_byte= pickle.load(open('keys/' + os.getenv("WALLET") +'/private_key.pem', 'rb'))
 
 private_key= keys.UmbralPrivateKey.from_bytes(private_key_byte)
 
 cleartext = pre.decrypt(ciphertext=ciphertext,capsule=capsule,decrypting_key=private_key)
 
 
-output_file = open('Encrpted/'+os.getenv("WALLET"), "wb")
+output_file = open('Decrypted/'+ os.getenv("WALLET")+'/'+os.getenv("OUTPUT_PATH"), "wb")
 output_file.write(cleartext)
 output_file.close()
 
 #pickle.dump(cleartext,open("Med_Doc/decrypted_file.jpeg", "wb")  )
-print(os.getenv("OUTPUT_PATH"))
-#+os.getenv("NAME")
+
+#print('Decrypted/'+ os.getenv("WALLET")+'/'os.getenv("OUTPUT_PATH"))
+#+os.getenv("NAME") 

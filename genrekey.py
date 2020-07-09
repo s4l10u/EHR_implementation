@@ -31,13 +31,24 @@ public_key= keys.UmbralPublicKey.from_bytes(public_key_byte)
 
 kfrags = pre.generate_kfrags(delegating_privkey=private_key,signer = Signer,receiving_pubkey=public_key,threshold= int(os.getenv("THRESHOLD")),N= int(os.getenv("N")))
 
-kfrags_dict = {} 
-kfrags_dict["kfrags"] = [ KFrag.to_bytes(kfrag)  for kfrag in kfrags]
-kfrags_dict["FOR"]= os.getenv("FOR")
-kfrags_dict["THRESHOLD"]= os.getenv("THRESHOLD")
-kfrags_dict["N"]= os.getenv("N")
+# kfrags_dict = {} 
+# kfrags_dict["kfrags"] = [ KFrag.to_bytes(kfrag)  for kfrag in kfrags]
+# kfrags_dict["FOR"]= os.getenv("FOR")
+# kfrags_dict["THRESHOLD"]= os.getenv("THRESHOLD")
+# kfrags_dict["N"]= os.getenv("N")
+
+kfrags_info  = {} 
+kfrags_info["FOR"]= os.getenv("FOR")
+kfrags_info["THRESHOLD"]= os.getenv("THRESHOLD")
+kfrags_info["N"]= os.getenv("N")
+
+outfile=open('Ursulas/'+ os.getenv("FOR") +'/kfrags.info','wb')
+pickle.dump(kfrags_info,outfile)
+outfile.close()
+
+kfrags=[ KFrag.to_bytes(kfrag)  for kfrag in kfrags]
 outfile=open('Ursulas/'+ os.getenv("FOR") +'/kfrag.cert','wb')
-pickle.dump(kfrags_dict,outfile)
+pickle.dump(kfrags,outfile)
 outfile.close()
 
 
