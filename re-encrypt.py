@@ -11,7 +11,6 @@ import os
 from dotenv import load_dotenv
 import pickle
 import marshal
-import dill
 import random
 import json
 project_folder = os.getcwd()
@@ -20,12 +19,12 @@ load_dotenv(os.path.join(project_folder, '.env'))
 #kfrags_byte= pickle.load(open('Ursulas/'+ os.getenv("FOR") + '/kfrag.cert', 'rb'))
 
 
-# capsule_byte= pickle.load(open(os.getenv("CAPSULE"), 'rb'))
-# capsule = pre.Capsule.from_bytes(capsule_byte,params)
-
-file = open(os.getenv("CAPSULE"), 'rb')  # The "rb" clause tells the open method to read the file as bytes
-capsule_byte = file.read()
+capsule_byte= pickle.load(open(os.getenv("CAPSULE"), 'rb'))
 capsule = pre.Capsule.from_bytes(capsule_byte,params)
+
+# file = open(os.getenv("CAPSULE"), 'rb')  # The "rb" clause tells the open method to read the file as bytes
+# capsule_byte = file.read()
+# capsule = pre.Capsule.from_bytes(capsule_byte,params)
 
 public_key_byte= pickle.load(open(os.getenv("DELEGERPK"), 'rb'))
 public_key= keys.UmbralPublicKey.from_bytes(public_key_byte)
@@ -56,11 +55,7 @@ else:
         cfrags.append(cfrag)       
 
 
-for cfrag in cfrags:
-    capsule.attach_cfrag(cfrag)
 
+cfrags_byte=[umbral.cfrags.CapsuleFrag.to_bytes(cfrag) for cfrag in cfrags]
+pickle.dump(cfrags_byte,open('Re-encrypted/'+os.getenv("FOR")+'/cfrags','wb'))
 
-pickle.dump(capsule_byte, open('Re-encrypted/'+os.getenv("FOR")+'/capsule.cap','wb'))
-
-print(capsule)
-print (hash(capsule))

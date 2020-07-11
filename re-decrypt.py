@@ -30,27 +30,39 @@ ciphertext = file.read()
 # capsule_byte = file.read()
 
 
-#ciphertext = pickle.load(open(os.getenv("NAME"), 'rb'))
-
 capsule_byte= pickle.load(open(os.getenv("CAPSULE"), 'rb'))
-
 capsule = pre.Capsule.from_bytes(capsule_byte,params)
 
-# print (capsule)
-# print (hash(ciphertext))
 
 private_key_byte= pickle.load(open('keys/' + os.getenv("WALLET") +'/private_key.pem', 'rb'))
 
 private_key= keys.UmbralPrivateKey.from_bytes(private_key_byte)
 
+cfrags_byte=pickle.load(open('Re-encrypted/'+os.getenv("WALLET")+'/cfrags', 'rb'))
+cfrags=[umbral.cfrags.CapsuleFrag.from_bytes(cfrag) for cfrag in cfrags_byte]
+
+
+public_key_byte= pickle.load(open(os.getenv("DELEGERPK"), 'rb'))
+public_key= keys.UmbralPublicKey.from_bytes(public_key_byte)
+
+verifying_key_byte= pickle.load(open(os.getenv("DELEGERVK"), 'rb'))
+verifying_key= keys.UmbralPublicKey.from_bytes(verifying_key_byte)
+
+Bob_public_key_byte= pickle.load(open(os.getenv("PK_PATH"), 'rb'))
+Bob_public_key= keys.UmbralPublicKey.from_bytes(Bob_public_key_byte)
+
+
+correctness=capsule.set_correctness_keys(delegating=public_key,receiving=Bob_public_key,verifying=verifying_key)
+
+for cfrag in cfrags:
+    capsule.attach_cfrag(cfrag)
+
+
 cleartext = pre.decrypt(ciphertext=ciphertext,capsule=capsule,decrypting_key=private_key)
 
 
-output_file = open('Decrypted/'+ os.getenv("WALLET")+'/'+os.getenv("OUTPUT_PATH"), "wb")
+output_file = open('Re-decrypted/'+ os.getenv("WALLET")+'/'+os.getenv("OUTPUT_PATH"), "wb")
 output_file.write(cleartext)
 output_file.close()
 
-#pickle.dump(cleartext,open('Decrypted/'+ os.getenv("WALLET")+'/'+os.getenv("OUTPUT_PATH"), "wb"))
-
-#print('Decrypted/'+ os.getenv("WALLET")+'/'os.getenv("OUTPUT_PATH"))
-#+os.getenv("NAME") 
+#pickle.dump(cleartext,open('Re-decrypted/'+ os.getenv("WALLET")+'/'+os.getenv("OUTPUT_PATH"), "wb"))

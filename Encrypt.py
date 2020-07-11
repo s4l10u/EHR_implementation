@@ -8,7 +8,7 @@ import os
 from dotenv import load_dotenv
 import pickle
 import marshal
-import dill
+
 project_folder = os.getcwd()
 load_dotenv(os.path.join(project_folder, '.env'))
 
@@ -27,21 +27,20 @@ ciphertext, capsule = pre.encrypt(public_key, plaintext)
 #os.environ["capsule"]=capsule
 #os.getenv("capsule")
 
-print (capsule)
-print (hash(ciphertext))
 # save the cipher and capsule
+
+#pickle.dump(ciphertext,open('Encrypted/'+os.getenv("WALLET")+'/'+ os.getenv("NAME")+'.enc', "wb"))
 
 output_file =  open('Encrypted/'+os.getenv("WALLET")+'/'+ os.getenv("NAME")+'.enc', "wb")
 output_file.write(ciphertext)
 output_file.close()
 
-
 capsule_byte = pre.Capsule.to_bytes(capsule)
 
 #print (  pre.Capsule.from_bytes(capsule_byte))
 
-#pickle.dump(capsule_byte, open('Encrypted/'+os.getenv("WALLET")+ '/'+ os.getenv("NAME")+'.cap','wb'))
+pickle.dump(capsule_byte, open('Encrypted/'+os.getenv("WALLET")+ '/'+ os.getenv("NAME")+'.cap','wb'))
 
-output_file =  open('Encrypted/'+os.getenv("WALLET")+ '/'+ os.getenv("NAME")+'.cap','wb')
-output_file.write(capsule_byte)
-output_file.close()
+# output_file =  open('Encrypted/'+os.getenv("WALLET")+ '/'+ os.getenv("NAME")+'.cap','wb')
+# output_file.write(capsule_byte)
+# output_file.close()

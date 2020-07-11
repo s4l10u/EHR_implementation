@@ -10,7 +10,7 @@ function Help() {
   echo "      - 'dec'        - Decrypt a given file and store it localy"
   echo "      - 'gen-re-key' - Create an re-encryption key for a given public key"
   echo "      - 're-enc'     - re-encrypt a given for "
- 
+  echo "      - 're-dec'     - decrypt with re-encapsulated capsule "
   echo
   echo "    Flags:"
   echo
@@ -61,6 +61,8 @@ function Help() {
   echo "./ehr.sh re-enc -f Bob -dpk keys/Jean/public_key.cert -dvk keys/Jean/verifying_key.cert -c Encrypted/Jean/scan.jpeg.cap -pk keys/Bob/public_key.cert "
   echo
   echo " ./ehr.sh dec   -n Encrypted/Alice/scan.jpeg.enc  -c Encrypted/Alice/scan.jpeg.cap  -w Alice -o scan.jpeg"
+  echo
+  echo " ./ehr.sh re-dec   -n Encrypted/Alice/scan.jpeg.enc  -c Encrypted/Alice/scan.jpeg.cap  -w Bob -o scan.jpeg -dpk keys/Alice/public_key.cert -dvk keys/Alice/verifying_key.cert  -pk keys/Bob/public_key.cert"
 }
 export N=1
 export THRESHOLD=1
@@ -190,6 +192,14 @@ function ReEncrypt(){
   cd ..
   python re-encrypt.py
 }
+
+function ReDecrypt(){
+  cd Re-decrypted
+  [ ! -d "$WALLET" ] && mkdir -p "$WALLET"
+  cd ..
+  python re-decrypt.py
+}
+
 # Determine mode of operation and printing out what we asked for
 if [ "$MODE" == "add" ]; then
   echo
@@ -252,7 +262,7 @@ elif [ "$MODE" == "dec" ]; then
   echo
   echo " + Decrypt  file"
   echo
-  echo " + Store decrypted file and the capsule  to $OUTPUT_PATH +"
+  echo " + Store decrypted file and the capsule  to Encrypted/$WALLET/$OUTPUT_PATH "
   echo
  
 
@@ -275,7 +285,17 @@ elif [ "$MODE" == "re-enc" ]; then
   echo
   echo " + perform re-encryption"
   echo
-  echo " + Store the re-encrypted capsule to IPFS"
+  echo " + Store the re-encrypted capsule to Re-encrypted/$FOR/cfrags"
+  echo
+
+elif [ "$MODE" == "re-dec" ]; then
+  echo
+  ReDecrypt
+  echo " + Retrieve cfrags from proxies"
+  echo
+  echo " + decrypt using cfrags collected from Ursulas"
+  echo
+  echo " + Store the decrypted file to "
   echo
 
 else

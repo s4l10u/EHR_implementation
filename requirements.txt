@@ -1,4 +1,7 @@
 umbral
-python-decouple >= 3.3
+python-decouple == 3.3
 python-dotenv
 json
+dill
+marshal 
+pickle

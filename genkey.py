@@ -8,7 +8,6 @@ import os
 from dotenv import load_dotenv
 import pickle
 import marshal
-import dill
 project_folder = os.getcwd()
 load_dotenv(os.path.join(project_folder, '.env'))
 
