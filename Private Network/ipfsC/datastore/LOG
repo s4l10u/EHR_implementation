@@ -1,0 +1,107 @@
+=============== Dec 23, 2020 (UTC) ===============
+22:26:32.997436 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+22:26:33.054809 db@open opening
+22:26:33.058229 version@stat F·[] S·0B[] Sc·[]
+22:26:33.140007 db@janitor F·2 G·0
+22:26:33.140070 db@open done T·85.216056ms
+22:26:37.010708 db@close closing
+22:26:37.010825 db@close done T·113.542µs
+=============== Dec 23, 2020 (UTC) ===============
+22:26:37.012128 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+22:26:37.012378 version@stat F·[] S·0B[] Sc·[]
+22:26:37.012395 db@open opening
+22:26:37.012520 journal@recovery F·1
+22:26:37.014590 journal@recovery recovering @1
+22:26:37.076095 memdb@flush created L0@2 N·12 S·1KiB "/pi..WUz,v9":"/pr..crQ,v12"
+22:26:37.079573 version@stat F·[1] S·1KiB[1KiB] Sc·[0.25]
+22:26:37.253564 db@janitor F·3 G·0
+22:26:37.253627 db@open done T·241.217195ms
+22:26:37.559705 db@close closing
+22:26:37.559835 db@close done T·126.8µs
+=============== Dec 23, 2020 (UTC) ===============
+22:26:37.799012 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+22:26:37.799293 version@stat F·[1] S·1KiB[1KiB] Sc·[0.25]
+22:26:37.799311 db@open opening
+22:26:37.799398 journal@recovery F·1
+22:26:37.816036 journal@recovery recovering @3
+22:26:37.845073 memdb@flush created L0@5 N·6 S·878B "/F5..34A,v19":"/pi..rty,v14"
+22:26:37.848444 version@stat F·[2] S·1KiB[1KiB] Sc·[0.50]
+22:26:38.000442 db@janitor F·4 G·0
+22:26:38.000495 db@open done T·201.156145ms
+22:26:38.051797 db@close closing
+22:26:38.051868 db@close done T·68.599µs
+=============== Dec 23, 2020 (UTC) ===============
+22:26:38.207355 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+22:26:38.207632 version@stat F·[2] S·1KiB[1KiB] Sc·[0.50]
+22:26:38.207652 db@open opening
+22:26:38.207741 journal@recovery F·1
+22:26:38.218715 journal@recovery recovering @6
+22:26:38.239053 version@stat F·[2] S·1KiB[1KiB] Sc·[0.50]
+22:26:38.395311 db@janitor F·4 G·0
+22:26:38.396969 db@open done T·189.294111ms
+22:26:38.483338 db@close closing
+22:26:38.490764 db@close done T·7.41176ms
+=============== Dec 23, 2020 (UTC) ===============
+22:26:38.622234 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+22:26:38.622502 version@stat F·[2] S·1KiB[1KiB] Sc·[0.50]
+22:26:38.622522 db@open opening
+22:26:38.622613 journal@recovery F·1
+22:26:38.641255 journal@recovery recovering @8
+22:26:38.650136 version@stat F·[2] S·1KiB[1KiB] Sc·[0.50]
+22:26:38.728038 db@janitor F·4 G·0
+22:26:38.728099 db@open done T·105.561746ms
+22:27:59.576143 db@close closing
+22:27:59.578532 db@close done T·2.38698ms
+=============== Dec 23, 2020 (UTC) ===============
+22:28:10.576565 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+22:28:10.660491 version@stat F·[2] S·1KiB[1KiB] Sc·[0.50]
+22:28:10.660524 db@open opening
+22:28:10.660678 journal@recovery F·1
+22:28:10.683990 journal@recovery recovering @10
+22:28:10.736515 memdb@flush created L0@12 N·78 S·8KiB "/F5..M3Y,v31":"/pr..35I,v75"
+22:28:10.739579 version@stat F·[3] S·10KiB[10KiB] Sc·[0.75]
+22:28:10.911675 db@janitor F·5 G·0
+22:28:10.911719 db@open done T·251.18025ms
+22:30:15.062413 db@close closing
+22:30:15.065610 db@close done T·3.180549ms
+=============== Dec 23, 2020 (UTC) ===============
+22:30:25.906565 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+22:30:25.943919 version@stat F·[3] S·10KiB[10KiB] Sc·[0.75]
+22:30:25.943961 db@open opening
+22:30:25.944110 journal@recovery F·1
+22:30:25.959018 journal@recovery recovering @13
+22:30:26.022203 memdb@flush created L0@15 N·70 S·7KiB "/F5..M3Y,v102":"/pr..35I,v132"
+22:30:26.022591 version@stat F·[4] S·17KiB[17KiB] Sc·[1.00]
+22:30:26.105484 db@janitor F·6 G·0
+22:30:26.105616 db@open done T·161.560699ms
+22:30:26.106009 table@compaction L0·4 -> L1·0 S·17KiB Q·170
+22:30:26.136347 table@build created L1@18 N·75 S·8KiB "/F5..M3Y,v102":"/pr..35I,v132"
+22:30:26.136487 version@stat F·[0 1] S·8KiB[0B 8KiB] Sc·[0.00 0.00]
+22:30:26.190014 table@compaction committed F-3 S-9KiB Ke·0 D·91 T·83.930385ms
+22:30:26.190205 table@remove removed @15
+22:30:26.190292 table@remove removed @12
+22:30:26.190351 table@remove removed @5
+22:30:26.190400 table@remove removed @2
+22:32:06.850177 db@close closing
+22:32:06.850353 db@close done T·170.598µs
+=============== Dec 23, 2020 (UTC) ===============
+22:32:15.643729 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+22:32:15.660661 version@stat F·[0 1] S·8KiB[0B 8KiB] Sc·[0.00 0.00]
+22:32:15.660704 db@open opening
+22:32:15.660851 journal@recovery F·1
+22:32:15.665782 journal@recovery recovering @16
+22:32:15.721335 memdb@flush created L0@19 N·70 S·7KiB "/F5..M3Y,v171":"/pr..35I,v216"
+22:32:15.724441 version@stat F·[1 1] S·15KiB[7KiB 8KiB] Sc·[0.25 0.00]
+22:32:15.888533 db@janitor F·4 G·0
+22:32:15.888595 db@open done T·227.87207ms
+22:32:40.785820 db@close closing
+22:32:40.785953 db@close done T·131.408µs
+=============== Dec 23, 2020 (UTC) ===============
+22:33:52.338991 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+22:33:52.339339 version@stat F·[1 1] S·15KiB[7KiB 8KiB] Sc·[0.25 0.00]
+22:33:52.339363 db@open opening
+22:33:52.339465 journal@recovery F·1
+22:33:52.350291 journal@recovery recovering @20
+22:33:52.400506 version@stat F·[1 1] S·15KiB[7KiB 8KiB] Sc·[0.25 0.00]
+22:33:52.563634 db@janitor F·4 G·0
+22:33:52.563683 db@open done T·224.292866ms

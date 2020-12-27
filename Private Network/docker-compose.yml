@@ -1,0 +1,68 @@
+version: '3.5'
+
+services:
+   ipfsA:
+     image: ipfs/go-ipfs
+     container_name: "ipfsA"
+     ports:
+       - 4001:4001
+       - 5001:5001
+     volumes:
+       - ./ipfsA:/data/ipfs/ 
+   clusterA:
+     image: ipfs/ipfs-cluster:latest
+     container_name: "ipfs-cluster-A"
+     environment:
+       CLUSTER_IPFSHTTP_NODEMULTIADDRESS: /dns4/ipfsA/tcp/5001
+       CLUSTER_RESTAPI_HTTPLISTENMULTIADDRESS: /ip4/0.0.0.0/tcp/9094 # Expose API
+       IPFS_BOOTSTRAP_RM_ALL: "true"
+     ports:
+       - 7094:9094
+     depends_on:
+       - ipfsA 
+     volumes:
+       - ./clusterA:/data/ipfs-cluster
+
+   ipfsB:
+     image: ipfs/go-ipfs
+     container_name: "ipfsB"
+     ports:
+       - 6001:4001
+       - 7001:5001
+     volumes:
+       - ./ipfsB:/data/ipfs/ 
+   clusterB:
+     image: ipfs/ipfs-cluster:latest
+     container_name: "ipfs-cluster-B"
+     environment:
+       CLUSTER_IPFSHTTP_NODEMULTIADDRESS: /dns4/ipfsB/tcp/5001
+       CLUSTER_RESTAPI_HTTPLISTENMULTIADDRESS: /ip4/0.0.0.0/tcp/9094 # Expose API
+       IPFS_BOOTSTRAP_RM_ALL: "true"
+     ports:
+       - 8094:9094
+     depends_on:
+       - ipfsB
+     volumes:
+       - ./clusterB:/data/ipfs-cluster
+   ipfsC:
+     image: ipfs/go-ipfs
+     container_name: "ipfsC"
+     ports:
+       - 8001:4001
+       - 9001:5001
+     volumes:
+       - ./ipfsC:/data/ipfs/ 
+   clusterC:
+     image: ipfs/ipfs-cluster:latest
+     container_name: "ipfs-cluster-C"
+     environment:
+       CLUSTER_IPFSHTTP_NODEMULTIADDRESS: /dns4/ipfsC/tcp/5001
+       CLUSTER_RESTAPI_HTTPLISTENMULTIADDRESS: /ip4/0.0.0.0/tcp/9094 # Expose API
+       IPFS_BOOTSTRAP_RM_ALL: "true"
+     ports:
+       - 9097:9094
+     depends_on:
+       - ipfsC
+     volumes:
+       - ./clusterC:/data/ipfs-cluster
+  
