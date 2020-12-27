@@ -7,8 +7,14 @@ services:
      ports:
        - 4001:4001
        - 5001:5001
-     volumes:
-       - ./ipfsA:/data/ipfs/ 
+     configs:
+       - source: swarm
+         target: /data/ipfs/
+     deploy:
+       placement:
+        constraints:
+        - node.labels.peer1==true
+
    clusterA:
      image: ipfs/ipfs-cluster:latest
      container_name: "ipfs-cluster-A"
@@ -22,6 +28,10 @@ services:
        - ipfsA 
      volumes:
        - ./clusterA:/data/ipfs-cluster
+     deploy:
+       placement:
+        constraints:
+        - node.labels.peer1==true
 
    ipfsB:
      image: ipfs/go-ipfs
@@ -29,8 +39,14 @@ services:
      ports:
        - 6001:4001
        - 7001:5001
-     volumes:
-       - ./ipfsB:/data/ipfs/ 
+     configs:
+       - source: swarm
+         target: /data/ipfs/
+     deploy:
+       placement:
+        constraints:
+        - node.labels.peer2==true
+
    clusterB:
      image: ipfs/ipfs-cluster:latest
      container_name: "ipfs-cluster-B"
@@ -44,14 +60,24 @@ services:
        - ipfsB
      volumes:
        - ./clusterB:/data/ipfs-cluster
+
+     deploy:
+       placement:
+        constraints:
+        - node.labels.peer2==true
    ipfsC:
      image: ipfs/go-ipfs
      container_name: "ipfsC"
      ports:
        - 8001:4001
        - 9001:5001
-     volumes:
-       - ./ipfsC:/data/ipfs/ 
+     configs:
+       - source: swarm
+         target: /data/ipfs/
+     deploy:
+       placement:
+        constraints:
+        - node.labels.peer3==true
    clusterC:
      image: ipfs/ipfs-cluster:latest
      container_name: "ipfs-cluster-C"
@@ -65,4 +91,11 @@ services:
        - ipfsC
      volumes:
        - ./clusterC:/data/ipfs-cluster
-  
+     deploy:
+       placement:
+        constraints:
+        - node.labels.peer3==true
+
+configs:
+  swarm:
+    external: true
